@@ -1,0 +1,280 @@
+{
+	"info": {
+		"_postman_id": "healthcare-management-system",
+		"name": "Healthcare Management System",
+		"description": "Collection for testing Healthcare Management System APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register Doctor",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Dr. John Doe\",\n    \"specialization\": \"Cardiologist\",\n    \"email\": \"john.doe@example.com\",\n    \"phone\": \"+1234567890\",\n    \"password\": \"StrongP@ss123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/register/doctor",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "register", "doctor"]
+						}
+					}
+				},
+				{
+					"name": "Register Patient",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Jane Smith\",\n    \"email\": \"jane.smith@example.com\",\n    \"phone\": \"+1234567890\",\n    \"password\": \"StrongP@ss123\",\n    \"dob\": \"1990-01-01\",\n    \"medicalHistory\": \"No major issues\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/register/patient",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "register", "patient"]
+						}
+					}
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"user@example.com\",\n    \"password\": \"StrongP@ss123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "login"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Doctors",
+			"item": [
+				{
+					"name": "Search Doctors by Specialization",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/doctors/specialization/Cardiologist?page=0&size=10",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "doctors", "specialization", "Cardiologist"],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Doctor Availability",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/doctors/1/availability",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "doctors", "1", "availability"]
+						}
+					}
+				},
+				{
+					"name": "Update Doctor Availability",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    \"2025-10-30T09:00:00\",\n    \"2025-10-30T10:00:00\",\n    \"2025-10-30T11:00:00\"\n]"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/doctors/1/availability",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "doctors", "1", "availability"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Appointments",
+			"item": [
+				{
+					"name": "Book Appointment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"patientId\": 1,\n    \"doctorId\": 1,\n    \"appointmentTime\": \"2025-10-30T09:00:00\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/appointments/book",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "appointments", "book"]
+						}
+					}
+				},
+				{
+					"name": "Cancel Appointment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/appointments/1/cancel?userId=1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "appointments", "1", "cancel"],
+							"query": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Patient Appointments",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/appointments/patient/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "appointments", "patient", "1"]
+						}
+					}
+				},
+				{
+					"name": "Get Doctor Schedule",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/appointments/doctor/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "appointments", "doctor", "1"]
+						}
+					}
+				},
+				{
+					"name": "Add Prescription",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/plain"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "Prescription details and medical notes..."
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/appointments/1/prescription?doctorId=1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "appointments", "1", "prescription"],
+							"query": [
+								{
+									"key": "doctorId",
+									"value": "1"
+								}
+							]
+						}
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		},
+		{
+			"key": "token",
+			"value": "your-jwt-token-here"
+		}
+	]
+}
